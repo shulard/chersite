@@ -110,7 +110,7 @@ export default defineConfig(({ command, mode }) => {
       legacy({ targets: ["defaults", "not IE 11"] }),
 
       buildDotenvPlugin({
-        envVars: process.env,
+        envVars: process.env as { [x: string]: any },
         dotenvOutDir: config.buildDotenvOutDir,
         additionalVarKeys: [
           "PROTOCOL",
@@ -123,9 +123,9 @@ export default defineConfig(({ command, mode }) => {
       }),
 
       buildHtaccessPlugin({
-        serverWebRootPath: process.env.HTACCESS_SERVER_WEB_ROOT_PATH,
-        user: process.env.HTACCESS_AUTH_USER,
-        password: process.env.HTACCESS_AUTH_PASSWORD,
+        serverWebRootPath: process.env.HTACCESS_SERVER_WEB_ROOT_PATH as string,
+        user: process.env.HTACCESS_AUTH_USER as string,
+        password: process.env.HTACCESS_AUTH_PASSWORD as string,
         htaccessTemplatePath: config.htaccessTemplateFilePath,
         outputPath: config.wwwDir,
         enable: process.env.BUILD_HTACCESS === "true",
@@ -134,7 +134,7 @@ export default defineConfig(({ command, mode }) => {
       devServerlogPlugin({
         protocol,
         host: ipAddress,
-        base: process.env.VITE_APP_BASE,
+        base: process.env.VITE_APP_BASE as string,
         // enable only if we don't use index.html, but ts/tsx entry points
         enable: config.input?.length > 0,
       }),
